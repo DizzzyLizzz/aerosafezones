@@ -1,0 +1,13 @@
+{
+  "itemGroup.aerosafezones": "Example Mod Tab",
+  "block.aerosafezones.example_block": "Example Block",
+  "item.aerosafezones.example_item": "Example Item",
+
+  "aerosafezones.configuration.title": "Aero Safe Zones Configs",
+  "aerosafezones.configuration.section.aerosafezones.common.toml": "Aero Safe Zones Configs",
+  "aerosafezones.configuration.section.aerosafezones.common.toml.title": "Aero Safe Zones Configs",
+  "aerosafezones.configuration.items": "Item List",
+  "aerosafezones.configuration.logDirtBlock": "Log Dirt Block",
+  "aerosafezones.configuration.magicNumberIntroduction": "Magic Number Text",
+  "aerosafezones.configuration.magicNumber": "Magic Number"
+}
