@@ -124,7 +124,7 @@ dependencies {
     // The group id is ignored when searching -- in this case, it is "blank"
 
     implementation "blank:aeroclaims:${aeroclaims_version}"
-    implementation "blank:open-parties-and-claims-neoforge-1.21.1.${opac_version}"
+    implementation "blank:open-parties-and-claims-neoforge-1.21.1-${opac_version}"
 
     // Example mod dependency using a file as dependency
     // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")

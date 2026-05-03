@@ -1,9 +1,10 @@
-Aeroclaims is non functional currently, the intention is to create a mod with defined configurable safe zones that will update the aeroclaims status of a sable sublevel
+Aero Safe Zones is non functional currently, the intention is to create a mod with defined configurable safe zones that will update the aeroclaims status of a sable sublevel
 
 
 
 
 Neoforge README:
+
 Installation information
 =======
 
