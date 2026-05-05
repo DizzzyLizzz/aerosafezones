@@ -125,6 +125,7 @@ dependencies {
 
     implementation "blank:aeroclaims:${aeroclaims_version}"
     implementation "blank:open-parties-and-claims-neoforge-1.21.1-${opac_version}"
+    implementation "blank:sable-companion-common-1.21.1-${sable_companion_version}"
 
     // Example mod dependency using a file as dependency
     // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
