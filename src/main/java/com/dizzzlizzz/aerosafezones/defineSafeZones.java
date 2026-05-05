@@ -18,20 +18,19 @@ import static com.google.gson.internal.bind.TypeAdapters.UUID;
 
 //get logger
 
-public class verifyClaim {
-    public static final Logger LOGGER = LogUtils.getLogger();
-
-
-
-  boolean isInClaim(String[] playerUUID, int blockPosX, int blockPosZ){
-
-        if(playerUUID != null) {
-
-
-        }{
-            
-        }
-
-  }
-
-}
+//public class verifyClaim {
+//    public static final Logger LOGGER = LogUtils.getLogger();
+//
+//
+//
+//  boolean isInClaim(String[] playerUUID, int blockPosX, int blockPosZ){
+//
+//        if(playerUUID != null) {
+//
+//
+//
+//        }
+//
+//  }
+//
+//}
