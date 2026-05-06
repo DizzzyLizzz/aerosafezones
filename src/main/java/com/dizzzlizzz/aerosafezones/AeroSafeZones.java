@@ -2,19 +2,14 @@ package com.dizzzlizzz.aerosafezones;
 
 
 import com.mapter.aeroclaims.claim.Claim;
-import dev.ryanhcode.sable.Sable;
-import dev.ryanhcode.sable.companion.SableCompanion;
-import dev.ryanhcode.sable.companion.math.BoundingBox3d;
-import dev.ryanhcode.sable.companion.math.Pose3d;
-import dev.ryanhcode.sable.companion.math.Pose3dc;
 import dev.ryanhcode.sable.sublevel.SubLevel;
-import dev.ryanhcode.sable.sublevel.plot.LevelPlot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.phys.Vec3;
+
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+
 
 import org.joml.Vector3d;
 import org.slf4j.Logger;
@@ -31,8 +26,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 
-import java.util.Arrays;
-
+import static com.dizzzlizzz.aerosafezones.Config.safeZoneRadiusFromSpawn;
 import static com.mapter.aeroclaims.claim.ClaimManager.*;
 import static com.mapter.aeroclaims.sublevel.SableShipUtils.getShipAt;
 import static com.mapter.aeroclaims.sublevel.SableShipUtils.isOnShip;
@@ -71,54 +65,56 @@ public class AeroSafeZones {
 
     }
 
-    private boolean isWithinRange(BlockPos center, BlockPos target, int range) {
-        if (Math.abs(center.getX() - target.getX()) <= range &&
-                Math.abs(center.getZ() - target.getZ()) <= range) {
-            return true;
-        } else {return false;}
+    private boolean outsideRadiusCheck(BlockPos POS, int radius) {
+        //if the player position of a sublevel is greater than radius, or less than negative radius, on either horizontal, return true
+        if(POS.getX() > 0 && (POS.getX() >= radius | POS.getX() <= -radius)){return true;
+            } else if (POS.getZ() < 0 && (POS.getZ() >= radius | POS.getZ() <= -radius)){return true;
+            }else {return false;}
+
     }
     int tickCounter;
-    BlockPos zeroZero = new BlockPos(1, 64, 1);
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerTick(ServerTickEvent.Post event) {
+        //Kill Switch based on config
+        if(safeZoneRadiusFromSpawn.getAsInt() != -1){
+            if (++tickCounter > 20) { // Fires roughly once per second
+                // Your logic
+                MinecraftServer server = event.getServer();
+                int radiusMarker = safeZoneRadiusFromSpawn.getAsInt();
+                tickCounter = 0;
 
-        if (++tickCounter > 20) { // Fires roughly once per second
-            // Your logic
-            MinecraftServer server = event.getServer();
-            int radiusMarker = 500;
-            tickCounter = 0;
 
-
-            for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-                BlockPos playerPos = player.getOnPos();
-                ServerLevel serverLevel = (ServerLevel) player.level();
-                //checks if player is on ship
-                if(isOnShip(serverLevel, playerPos)) {
-                    SubLevel playerShip = getShipAt(serverLevel, playerPos);
-                    //is ship if not null, trigger the claim check
-                    if(playerShip != null){
-                        Claim playerClaim = getClaimAt(serverLevel, playerPos);
-                        //if claim is not null, assigned claim to playerClaim
-                        if (playerClaim != null) {
-                            Claim shipClaim = getClaimAt(serverLevel, playerPos);
-                            //if claim is not null, find center as BlockPos
-                            if (shipClaim != null) {
-                                BlockPos claimCenter = shipClaim.getCenter();
-                                //if claim is active and is not within radiusMarker, disable claim
-                                if (shipClaim.isActive()){
-                                    LOGGER.info("s");
-                                    if(!isWithinRange(zeroZero, playerPos, radiusMarker)) {
-                                        deactivateClaim(serverLevel, claimCenter);
-                                        String shipCenterStr = Arrays.toString(claimCenter.toString().split(","));
-                                        LOGGER.info("Deactivated Claim at " +  shipCenterStr);
+                for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+                    BlockPos playerPos = player.getOnPos();
+                    ServerLevel serverLevel = (ServerLevel) player.level();
+                    //checks if player is on ship
+                    if (isOnShip(serverLevel, playerPos)) {
+                        SubLevel playerShip = getShipAt(serverLevel, playerPos);
+                        //is ship if not null, trigger the claim check
+                        if (playerShip != null) {
+                            Vector3d playerShipLP = playerShip.logicalPose().position();
+                            BlockPos playerShipPos = new BlockPos((int) Math.floor(playerShipLP.x), (int) Math.floor(playerShipLP.y), (int) Math.floor(playerShipLP.z));
+                            Claim playerClaim = getClaimAt(serverLevel, playerPos);
+                            //if claim is not null, assigned claim to playerClaim
+                            if (playerClaim != null) {
+                                Claim shipClaim = getClaimAt(serverLevel, playerPos);
+                                //if claim is not null, find center as BlockPos
+                                if (shipClaim != null) {
+                                    BlockPos claimCenter = shipClaim.getCenter();
+                                    //if claim is active and is not within radiusMarker, disable claim
+                                    if (shipClaim.isActive()) {
+                                        if (outsideRadiusCheck(playerShipPos, radiusMarker)) {
+                                            deactivateClaim(serverLevel, claimCenter);
+                                            LOGGER.info("Deactivated Claim at {}", playerShipPos);
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
 
+                    }
                 }
             }
         }
