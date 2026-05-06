@@ -124,7 +124,6 @@ dependencies {
     // The group id is ignored when searching -- in this case, it is "blank"
 
     implementation "blank:aeroclaims:${aeroclaims_version}"
-    implementation "blank:open-parties-and-claims-neoforge-1.21.1-${opac_version}"
     implementation "blank:sable-companion-common-1.21.1-${sable_companion_version}"
     implementation "blank:sable-neoforge-1.21.1-${sable_version}"
 
