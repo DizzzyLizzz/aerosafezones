@@ -27,6 +27,7 @@ import net.neoforged.neoforge.common.NeoForge;
 
 
 import static com.dizzzlizzz.aerosafezones.Config.safeZoneRadiusFromSpawn;
+import static com.dizzzlizzz.aerosafezones.defineSafeZones.outsideRadiusCheck;
 import static com.mapter.aeroclaims.claim.ClaimManager.*;
 import static com.mapter.aeroclaims.sublevel.SableShipUtils.getShipAt;
 import static com.mapter.aeroclaims.sublevel.SableShipUtils.isOnShip;
@@ -65,13 +66,7 @@ public class AeroSafeZones {
 
     }
 
-    private boolean outsideRadiusCheck(BlockPos POS, int radius) {
-        //if the player position of a sublevel is greater than radius, or less than negative radius, on either horizontal, return true
-        if(POS.getX() > 0 && (POS.getX() >= radius | POS.getX() <= -radius)){return true;
-            } else if (POS.getZ() < 0 && (POS.getZ() >= radius | POS.getZ() <= -radius)){return true;
-            }else {return false;}
 
-    }
     int tickCounter;
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
