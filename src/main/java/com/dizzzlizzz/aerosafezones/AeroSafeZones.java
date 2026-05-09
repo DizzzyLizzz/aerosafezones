@@ -18,6 +18,8 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import xaero.pac.common.server.api.OpenPACServerAPI;
+
 import static com.dizzzlizzz.aerosafezones.Config.safeZoneRadiusFromSpawn;
 import static com.dizzzlizzz.aerosafezones.defineSafeZones.*;
 import static com.mapter.aeroclaims.claim.ClaimManager.*;
