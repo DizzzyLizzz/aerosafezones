@@ -7,16 +7,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
-
-
 import org.joml.Vector3d;
 import org.slf4j.Logger;
-
 import com.mojang.logging.LogUtils;
-
-
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -24,10 +18,8 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
-
-
 import static com.dizzzlizzz.aerosafezones.Config.safeZoneRadiusFromSpawn;
-import static com.dizzzlizzz.aerosafezones.defineSafeZones.outsideRadiusCheck;
+import static com.dizzzlizzz.aerosafezones.defineSafeZones.*;
 import static com.mapter.aeroclaims.claim.ClaimManager.*;
 import static com.mapter.aeroclaims.sublevel.SableShipUtils.getShipAt;
 import static com.mapter.aeroclaims.sublevel.SableShipUtils.isOnShip;
@@ -75,11 +67,9 @@ public class AeroSafeZones {
         //Kill Switch based on config
         if(safeZoneRadiusFromSpawn.getAsInt() != -1){
             if (++tickCounter > 20) { // Fires roughly once per second
-                // Your logic
-                MinecraftServer server = event.getServer();
-                int radiusMarker = safeZoneRadiusFromSpawn.getAsInt();
-                tickCounter = 0;
 
+                MinecraftServer server = event.getServer();
+                tickCounter = 0;
 
                 for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                     BlockPos playerPos = player.getOnPos();
@@ -95,12 +85,13 @@ public class AeroSafeZones {
                             //if claim is not null, assigned claim to playerClaim
                             if (playerClaim != null) {
                                 Claim shipClaim = getClaimAt(serverLevel, playerPos);
+//                                LOGGER.info("Distance to center is {}", distanceToCenter(playerShipPos,safeZoneCenter));  //enable for debug
                                 //if claim is not null, find center as BlockPos
                                 if (shipClaim != null) {
                                     BlockPos claimCenter = shipClaim.getCenter();
                                     //if claim is active and is not within radiusMarker, disable claim
                                     if (shipClaim.isActive()) {
-                                        if (outsideRadiusCheck(playerShipPos, radiusMarker)) {
+                                        if (!isInsideSafeZone(playerShipPos)) {
                                             deactivateClaim(serverLevel, claimCenter);
                                             LOGGER.info("Deactivated Claim at {}", playerShipPos);
                                         }

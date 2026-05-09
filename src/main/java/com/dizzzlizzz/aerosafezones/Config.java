@@ -10,12 +10,12 @@ public class Config {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
 
-    public static final ModConfigSpec.ConfigValue<List<String>> safeZoneCenter = BUILDER
+    public static final ModConfigSpec.ConfigValue<List<Integer>> safeZoneCenter = BUILDER
             .comment("where would you like the center of your safe zone to be? (X,Z 0,0 is default)")
-            .define("safeZoneCenter", List.of("0", "0"));
+            .define("safeZoneCenter", List.of(0, 0));
 
     public static final ModConfigSpec.IntValue safeZoneRadiusFromSpawn = BUILDER
-            .comment("how far in a square do you want the safe zone to be from spawn (0,0)? -1 to disable")
+            .comment("how far in a circle do you want the safe zone to be from spawn (0,0)? -1 to disable")
             .defineInRange("safeZoneRadiusFromSpawn", 500, -1, Integer.MAX_VALUE);
 
     static final ModConfigSpec SPEC = BUILDER.build();
