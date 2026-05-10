@@ -114,8 +114,9 @@ public class AeroSafeZones {
                     net.minecraft.world.level.ChunkPos pChunkPos = player.chunkPosition();
 
                     BlockPos pChunkCenter = ChunkToBlockPos(pChunkPos);
-                    LOGGER.info("chunk pos {}", pChunkPos);
+                    //LOGGER.info("chunk pos {}", pChunkPos);
                     if(!isInsideSafeZone(pChunkCenter)){
+
                         OpenPACServerAPI.get(server).getServerClaimsManager().unclaim(Objects.requireNonNull(ResourceLocation.tryParse("minecraft:overworld")),pChunkPos.x,pChunkPos.z);
                     }
 
