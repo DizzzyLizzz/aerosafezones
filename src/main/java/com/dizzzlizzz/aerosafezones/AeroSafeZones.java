@@ -4,9 +4,12 @@ package com.dizzzlizzz.aerosafezones;
 import com.mapter.aeroclaims.claim.Claim;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import net.minecraft.core.BlockPos;
+
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.joml.Vector3d;
 import org.slf4j.Logger;
@@ -18,7 +21,11 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+
 import xaero.pac.common.server.api.OpenPACServerAPI;
+
+
+import java.util.Objects;
 
 import static com.dizzzlizzz.aerosafezones.Config.safeZoneRadiusFromSpawn;
 import static com.dizzzlizzz.aerosafezones.defineSafeZones.*;
@@ -103,6 +110,15 @@ public class AeroSafeZones {
                         }
 
                     }
+
+                    net.minecraft.world.level.ChunkPos pChunkPos = player.chunkPosition();
+
+                    BlockPos pChunkCenter = ChunkToBlockPos(pChunkPos);
+                    LOGGER.info("chunk pos {}", pChunkPos);
+                    if(!isInsideSafeZone(pChunkCenter)){
+                        OpenPACServerAPI.get(server).getServerClaimsManager().unclaim(Objects.requireNonNull(ResourceLocation.tryParse("minecraft:overworld")),pChunkPos.x,pChunkPos.z);
+                    }
+
                 }
             }
         }
