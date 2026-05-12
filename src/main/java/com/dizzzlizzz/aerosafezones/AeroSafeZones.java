@@ -10,6 +10,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
+
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.joml.Vector3d;
 import org.slf4j.Logger;
@@ -22,10 +23,12 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
+import xaero.pac.common.claims.player.api.IPlayerChunkClaimAPI;
 import xaero.pac.common.server.api.OpenPACServerAPI;
 
 
 import java.util.Objects;
+import java.util.UUID;
 
 import static com.dizzzlizzz.aerosafezones.Config.safeZoneRadiusFromSpawn;
 import static com.dizzzlizzz.aerosafezones.defineSafeZones.*;
@@ -70,6 +73,7 @@ public class AeroSafeZones {
 
     int tickCounter;
 
+    UUID wEMP = new UUID(0,0);
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerTick(ServerTickEvent.Post event) {
@@ -81,6 +85,7 @@ public class AeroSafeZones {
                 tickCounter = 0;
 
                 for (ServerPlayer player : server.getPlayerList().getPlayers()) {
+                    UUID pID = player.getUUID();
                     BlockPos playerPos = player.getOnPos();
                     ServerLevel serverLevel = (ServerLevel) player.level();
                     //checks if player is on ship
@@ -114,9 +119,18 @@ public class AeroSafeZones {
                     net.minecraft.world.level.ChunkPos pChunkPos = player.chunkPosition();
 
                     BlockPos pChunkCenter = ChunkToBlockPos(pChunkPos);
-                    LOGGER.info("chunk pos {}", pChunkPos);
+                    //LOGGER.info("chunk pos {}", pChunkPos);
                     if(!isInsideSafeZone(pChunkCenter)){
-                        OpenPACServerAPI.get(server).getServerClaimsManager().unclaim(Objects.requireNonNull(ResourceLocation.tryParse("minecraft:overworld")),pChunkPos.x,pChunkPos.z);
+                        IPlayerChunkClaimAPI Wempp = OpenPACServerAPI.get(server).getServerClaimsManager().get(Objects.requireNonNull(
+                                ResourceLocation.tryParse("minecraft:overworld")), pChunkPos.x, pChunkPos.z);
+//                          LOGGER.info("claim state Wempp {}", Wempp);
+
+                        if (Wempp != null && Wempp.getPlayerId() != wEMP) {
+                            if (!Wempp.getPlayerId().equals(wEMP)) {
+                                OpenPACServerAPI.get(server).getServerClaimsManager().tryToUnclaim(Objects.requireNonNull(
+                                        ResourceLocation.tryParse("minecraft:overworld")), pID, pChunkPos.x, pChunkPos.z, pChunkPos.x, pChunkPos.z, true);
+                            }
+                        }
                     }
 
                 }
