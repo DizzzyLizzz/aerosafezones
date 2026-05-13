@@ -25,6 +25,8 @@ import net.neoforged.neoforge.common.NeoForge;
 
 import xaero.pac.common.claims.player.api.IPlayerChunkClaimAPI;
 import xaero.pac.common.server.api.OpenPACServerAPI;
+import xyz.jpenilla.squaremap.api.Squaremap;
+import xyz.jpenilla.squaremap.api.SquaremapProvider;
 
 
 import java.util.Objects;
@@ -124,14 +126,21 @@ public class AeroSafeZones {
                         IPlayerChunkClaimAPI Wempp = OpenPACServerAPI.get(server).getServerClaimsManager().get(Objects.requireNonNull(
                                 ResourceLocation.tryParse("minecraft:overworld")), pChunkPos.x, pChunkPos.z);
 //                          LOGGER.info("claim state Wempp {}", Wempp);
-
+                        SquaremapProvider.get().playerManager().hide(player.getUUID());
                         if (Wempp != null && Wempp.getPlayerId() != wEMP) {
+
                             if (!Wempp.getPlayerId().equals(wEMP)) {
                                 OpenPACServerAPI.get(server).getServerClaimsManager().tryToUnclaim(Objects.requireNonNull(
                                         ResourceLocation.tryParse("minecraft:overworld")), pID, pChunkPos.x, pChunkPos.z, pChunkPos.x, pChunkPos.z, true);
                             }
                         }
-                    }
+
+                    } else {
+                        if (isInsideSafeZone(pChunkCenter)){
+                        SquaremapProvider.get().playerManager().show(player.getUUID());
+                    } }
+
+
 
                 }
             }

@@ -30,7 +30,7 @@ repositories {
     flatDir {
         dirs 'lizzDepend'
     }
-
+    mavenCentral()
     // Add here additional repositories if required by some of the dependencies below.
 }
 
@@ -127,6 +127,7 @@ dependencies {
     implementation "blank:sable-companion-common-1.21.1-${sable_companion_version}"
     implementation "blank:sable-neoforge-1.21.1-${sable_version}"
     implementation "blank:open-parties-and-claims-neoforge-1.21.1-${opac_version}"
+    compileOnly("xyz.jpenilla:squaremap-api:1.3.5")
 
     // Example mod dependency using a file as dependency
     // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
