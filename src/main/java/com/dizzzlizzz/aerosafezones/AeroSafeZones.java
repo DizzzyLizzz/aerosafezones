@@ -70,6 +70,8 @@ public class AeroSafeZones {
         LOGGER.info("HELLO FROM COMMON SETUP");
 
 
+
+
     }
 
 
