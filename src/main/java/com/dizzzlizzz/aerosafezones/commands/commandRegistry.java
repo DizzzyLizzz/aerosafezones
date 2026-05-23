@@ -1,5 +1,6 @@
 package com.dizzzlizzz.aerosafezones.commands;
 
+
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;

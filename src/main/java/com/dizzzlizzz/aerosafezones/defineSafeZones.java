@@ -12,6 +12,11 @@ import static com.dizzzlizzz.aerosafezones.Config.safeZoneRadiusFromSpawn;
 public class defineSafeZones {
     public static final Logger LOGGER = LogUtils.getLogger();
 
+    public static newCircleSZ(String name, int centerZ, int centerX, int radius){
+        circleSafeZone safeZone = new circleSafeZone();
+        return
+    }
+
     public static double distanceToCenter(BlockPos POS, BlockPos Center) {
 
         double POSx; double POSz; double centerX; double centerZ; double distance;

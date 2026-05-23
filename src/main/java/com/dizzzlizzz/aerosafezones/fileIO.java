@@ -30,7 +30,7 @@ public class fileIO {
             try {
                 // Creates the directory and any non-existent parent directories
                 Files.createDirectories(path);
-                LOGGER.info("Directory is ready!");
+                LOGGER.info("ASZ Directory is ready!");
             } catch (IOException e) {
                 LOGGER.info("Failed to create directory: {}", e.getMessage());
             }
@@ -38,9 +38,9 @@ public class fileIO {
             try {
                 File markerFile = new File("./AeroSafeZones/SafeZones.txt");
                 if (markerFile.createNewFile()) {
-                    LOGGER.info("File created: {}", markerFile.getName());
+                    LOGGER.info("ASZ File created: {}", markerFile.getName());
                 } else {
-                    LOGGER.info("File already exists.");
+                    LOGGER.info("ASZ File already exists.");
                 }
             } catch (IOException e) {
                 System.out.println("An error occurred.");
