@@ -25,7 +25,6 @@ import net.neoforged.neoforge.common.NeoForge;
 
 import xaero.pac.common.claims.player.api.IPlayerChunkClaimAPI;
 import xaero.pac.common.server.api.OpenPACServerAPI;
-import xyz.jpenilla.squaremap.api.Squaremap;
 import xyz.jpenilla.squaremap.api.SquaremapProvider;
 
 
@@ -33,7 +32,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static com.dizzzlizzz.aerosafezones.Config.safeZoneRadiusFromSpawn;
-import static com.dizzzlizzz.aerosafezones.defineSafeZones.*;
+import static com.dizzzlizzz.aerosafezones.safeZones.SZUtil.ChunkCenterBlockPos;
+import static com.dizzzlizzz.aerosafezones.safeZones.SZUtil.isInsideSafeZone;
 import static com.mapter.aeroclaims.claim.ClaimManager.*;
 import static com.mapter.aeroclaims.sublevel.SableShipUtils.getShipAt;
 import static com.mapter.aeroclaims.sublevel.SableShipUtils.isOnShip;
@@ -122,7 +122,7 @@ public class AeroSafeZones {
 
                     net.minecraft.world.level.ChunkPos pChunkPos = player.chunkPosition();
 
-                    BlockPos pChunkCenter = ChunkToBlockPos(pChunkPos);
+                    BlockPos pChunkCenter = ChunkCenterBlockPos(pChunkPos);
                     //LOGGER.info("chunk pos {}", pChunkPos);
                     if(!isInsideSafeZone(pChunkCenter)){
                         IPlayerChunkClaimAPI Wempp = OpenPACServerAPI.get(server).getServerClaimsManager().get(Objects.requireNonNull(

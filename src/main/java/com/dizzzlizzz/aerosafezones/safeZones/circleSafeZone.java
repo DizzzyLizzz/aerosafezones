@@ -4,11 +4,15 @@ import net.minecraft.core.BlockPos;
 
 public class circleSafeZone{
     String safeZoneId;
-    BlockPos SZCenter;
+    BlockPos SZCenterBP;
+    int SZCenterX;
+    int SZCenterZ;
     int SZradius;
-    circleSafeZone(String ID, int centerX, int centerZ, int radius){
+    public circleSafeZone(String ID, int centerX, int centerZ, int radius){
+        SZCenterX = centerX;
+        SZCenterZ = centerZ;
         safeZoneId = ID;
-        SZCenter = new BlockPos(centerX, 0, centerZ);
+        SZCenterBP = new BlockPos(centerX, 0, centerZ);
         SZradius = radius;
     }
     public int getRadius(){return this.SZradius;}
