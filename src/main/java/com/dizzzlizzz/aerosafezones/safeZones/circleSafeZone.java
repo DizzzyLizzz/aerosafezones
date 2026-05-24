@@ -16,6 +16,6 @@ public class circleSafeZone{
         SZradius = radius;
     }
     public int getRadius(){return this.SZradius;}
-    public BlockPos getCenterBlockPos(){return this.SZCenter;}
+    public BlockPos getCenterBlockPos(){return this.SZCenterBP;}
     public String getID(){return this.safeZoneId;}
 }

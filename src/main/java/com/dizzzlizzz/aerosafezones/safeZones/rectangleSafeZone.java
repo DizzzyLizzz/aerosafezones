@@ -7,7 +7,7 @@ import java.awt.*;
 public class rectangleSafeZone{
     String szID;
     int SZmaxX, SZminX, SZmaxZ, SZminZ;
-    rectangleSafeZone(String safeZoneID, int maxX, int minX, int minZ, int maxZ){
+    public rectangleSafeZone(String safeZoneID, int maxX, int minX, int minZ, int maxZ){
         szID = safeZoneID;
         SZmaxX = maxX;
         SZmaxZ = maxZ;

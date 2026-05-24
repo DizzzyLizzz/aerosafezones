@@ -17,14 +17,8 @@ public class SZUtil {
     }
 
 
-    public circleSafeZone newCircleSZ(String name, int centerZ, int centerX, int radius){
-        return new circleSafeZone(name, centerX, centerZ, radius);
-    }
-    public rectangleSafeZone newRectangleSZ(String safeZoneID, int maxX, int minX, int minZ, int maxZ){
 
-        return rectangleSafeZone(safeZoneID, )
 
-    }
     public static double distanceToCenter(BlockPos POS, BlockPos Center) {
 
         double POSx; double POSz; double centerX; double centerZ; double distance;
