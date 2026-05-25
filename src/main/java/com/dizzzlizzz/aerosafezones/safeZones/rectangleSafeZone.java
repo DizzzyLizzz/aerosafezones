@@ -9,10 +9,8 @@ public class rectangleSafeZone{
     int SZmaxX, SZminX, SZmaxZ, SZminZ;
     public rectangleSafeZone(String safeZoneID, int maxX, int minX, int minZ, int maxZ){
         szID = safeZoneID;
-        SZmaxX = maxX;
-        SZmaxZ = maxZ;
-        SZminX = minX;
-        SZminZ = minZ;
+        SZmaxX = maxX; SZminX = minX;
+        SZminZ = minZ; SZmaxZ = maxZ;
     }
     public int getMaxX(){return this.SZmaxX;}
     public int getMinX(){return this.SZminX;}
