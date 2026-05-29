@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 
 import java.awt.*;
 
-public class rectangleSafeZone{
+public class rectangleSafeZone extends safeZone{
     String szID;
     int SZmaxX, SZminX, SZmaxZ, SZminZ;
     public rectangleSafeZone(String safeZoneID, int maxX, int minX, int minZ, int maxZ){

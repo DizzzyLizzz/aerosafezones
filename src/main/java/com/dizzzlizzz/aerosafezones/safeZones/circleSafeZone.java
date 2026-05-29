@@ -2,7 +2,7 @@ package com.dizzzlizzz.aerosafezones.safeZones;
 
 import net.minecraft.core.BlockPos;
 
-public class circleSafeZone{
+public class circleSafeZone extends safeZone{
     String safeZoneId;
     BlockPos SZCenterBP;
     int SZCenterX;

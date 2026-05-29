@@ -16,8 +16,9 @@ public class SZUtil {
         return new BlockPos(chunkPos.getMiddleBlockX(), 0, chunkPos.getMiddleBlockZ());
     }
 
-
-
+    public static boolean isActive(safeZone SZ){
+        return SZ.active;
+    }
 
     public static double distanceToCenter(BlockPos POS, BlockPos Center) {
 
