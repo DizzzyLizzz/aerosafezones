@@ -2,6 +2,7 @@ package com.dizzzlizzz.aerosafezones;
 
 import com.dizzzlizzz.aerosafezones.safeZones.circleSafeZone;
 import com.dizzzlizzz.aerosafezones.safeZones.rectangleSafeZone;
+import com.dizzzlizzz.aerosafezones.safeZones.safeZone;
 import net.minecraft.core.BlockPos;
 
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 
 public class safeZoneFactory {
     String factoryID;
-    ArrayList<String> registeredSafeZones;
+    ArrayList<safeZone> registeredSafeZones;
     public safeZoneFactory(String SZFactoryName){
     }
 
@@ -24,14 +25,13 @@ public class safeZoneFactory {
         registerSafeZone(SZ);
         return 0;
     }
+    public static String getFactoryID(safeZoneFactory SZF){return SZF.factoryID;    }
 
-    public void registerSafeZone(rectangleSafeZone SZ){
-        String SZStr = SZ.toString();
-        registeredSafeZones.add(SZStr);
+    public void registerSafeZone(safeZone SZ){
+//        String SZStr = SZ.toString();
+        registeredSafeZones.add(SZ);
     }
-    public void registerSafeZone(circleSafeZone SZ){
-        String SZStr = SZ.toString();
-        registeredSafeZones.add(SZStr);
+    public void unregisterSafeZone(safeZone SZ){
+        registeredSafeZones.remove(SZ);
     }
-
 }

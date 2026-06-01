@@ -19,6 +19,10 @@ public class SZUtil {
     public static boolean isActive(safeZone SZ){
         return SZ.active;
     }
+    public static void toggleActive(safeZone SZ){
+        if (SZ.active) SZ.active = false;
+        else SZ.active = true;
+    }
 
     public static double distanceToCenter(BlockPos POS, BlockPos Center) {
 
