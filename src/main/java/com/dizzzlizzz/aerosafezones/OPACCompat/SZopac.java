@@ -1,12 +1,16 @@
 package com.dizzzlizzz.aerosafezones.OPACCompat;
 
+import com.dizzzlizzz.aerosafezones.AeroSafeZones;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,16 +26,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static com.dizzzlizzz.aerosafezones.safeZones.SZUtil.*;
-
+@EventBusSubscriber(modid = "aerosafezones")
 public class SZopac {
-
-    public SZopac (IEventBus modEventBus, ModContainer modContainer){
-
-        modEventBus.addListener(this::OpacClientRegister);
-        modEventBus.addListener(this::OpacServerRegister);
-
-        NeoForge.EVENT_BUS.register(this);
-    }
 
 //    IClaimsManagerTrackerAPI SZClaimsTracker = new IClaimsManagerTrackerAPI() {
 //        @Override
@@ -39,11 +35,12 @@ public class SZopac {
 //
 //        }
 //    };
-
-    public void OpacServerRegister(OPACServerAddonRegisterEvent event){
+    @SubscribeEvent
+    public static void OpacServerRegister(OPACServerAddonRegisterEvent event){
         IClaimsManagerTrackerRegisterAPI SZServerTracker = event.getClaimsManagerTrackerAPI();
+
         IClaimsManagerListenerAPI SZServeListener = new IClaimsManagerListenerAPI() {
-            UUID wEMP = new UUID(0,0);
+
             @Override
             public void onWholeRegionChange(@NotNull ResourceLocation resourceLocation, int i, int i1) {
 
@@ -51,18 +48,16 @@ public class SZopac {
 
             @Override
             public void onChunkChange(@NotNull ResourceLocation resourceLocation, int i, int i1, @Nullable IPlayerChunkClaimAPI iPlayerChunkClaimAPI) {
-                LOGGER.info("SZ Chunk Change Fired");
                 MinecraftServer SZServer = event.getServer();
-                UUID Pid = Objects.requireNonNull(iPlayerChunkClaimAPI).getPlayerId();
-                if(Pid != wEMP){
-                    ChunkPos claimCPos = new ChunkPos(i,i1);
-                    BlockPos chunkCenter = ChunkCenterBlockPos(claimCPos);
-                    if(!isInsideSafeZone(chunkCenter)){
+                ChunkPos claimCPos = new ChunkPos(i,i1);
+                BlockPos chunkCenter = ChunkCenterBlockPos(claimCPos);
+                if(!isInsideSafeZone(chunkCenter)){
 
-                        OpenPACServerAPI.get(SZServer).getServerClaimsManager().unclaim(resourceLocation,i,i1);
+                    OpenPACServerAPI.get(SZServer).getServerClaimsManager().unclaim(resourceLocation,i,i1);
 
-                    }
                 }
+
+
 
             }
 
@@ -75,7 +70,8 @@ public class SZopac {
 
     }
 
-    public void OpacClientRegister(OPACClientAddonRegisterEvent event){
+    @SubscribeEvent
+    public static void OpacClientRegister(OPACClientAddonRegisterEvent event){
         IClaimsManagerTrackerRegisterAPI SZClientTracker = event.getClaimsManagerTrackerAPI();
         IClaimsManagerListenerAPI SZListener = new IClaimsManagerListenerAPI() {
             @Override
@@ -84,7 +80,6 @@ public class SZopac {
             }
             @Override
             public void onChunkChange(@NotNull ResourceLocation resourceLocation, int i, int i1, @Nullable IPlayerChunkClaimAPI iPlayerChunkClaimAPI) {
-
 
             }
             @Override

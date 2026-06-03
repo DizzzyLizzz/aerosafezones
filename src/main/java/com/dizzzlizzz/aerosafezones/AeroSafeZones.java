@@ -1,6 +1,7 @@
 package com.dizzzlizzz.aerosafezones;
 
 
+import com.dizzzlizzz.aerosafezones.OPACCompat.SZopac;
 import com.mapter.aeroclaims.claim.Claim;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import net.minecraft.core.BlockPos;
@@ -11,7 +12,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
 
+import net.minecraft.world.level.ChunkPos;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
@@ -24,6 +29,9 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 import xaero.pac.common.claims.player.api.IPlayerChunkClaimAPI;
+import xaero.pac.common.claims.tracker.api.IClaimsManagerListenerAPI;
+import xaero.pac.common.claims.tracker.api.IClaimsManagerTrackerRegisterAPI;
+import xaero.pac.common.event.api.OPACServerAddonRegisterEvent;
 import xaero.pac.common.server.api.OpenPACServerAPI;
 import xyz.jpenilla.squaremap.api.SquaremapProvider;
 
@@ -32,8 +40,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static com.dizzzlizzz.aerosafezones.Config.safeZoneRadiusFromSpawn;
-import static com.dizzzlizzz.aerosafezones.safeZones.SZUtil.ChunkCenterBlockPos;
-import static com.dizzzlizzz.aerosafezones.safeZones.SZUtil.isInsideSafeZone;
+import static com.dizzzlizzz.aerosafezones.safeZones.SZUtil.*;
 import static com.mapter.aeroclaims.claim.ClaimManager.*;
 import static com.mapter.aeroclaims.sublevel.SableShipUtils.getShipAt;
 import static com.mapter.aeroclaims.sublevel.SableShipUtils.isOnShip;
